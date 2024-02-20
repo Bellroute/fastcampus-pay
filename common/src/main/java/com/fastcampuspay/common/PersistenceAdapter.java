@@ -1,4 +1,4 @@
-package common;
+package com.fastcampuspay.common;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface UseCase { // 핵사고날 아키텍쳐에서 Service를 카리키는 주석 용도로 사용되는 어노테이션
+public @interface PersistenceAdapter { // 핵사고날 아키텍쳐에서 Respository를 카리키는 주석 용도로 사용되는 어노테이션
 
     @AliasFor(annotation = Component.class)
     String value() default "";

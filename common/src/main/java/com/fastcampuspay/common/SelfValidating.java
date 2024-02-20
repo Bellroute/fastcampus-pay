@@ -1,4 +1,4 @@
-package common;
+package com.fastcampuspay.common;
 
 import java.util.Set;
 import javax.validation.ConstraintViolation;

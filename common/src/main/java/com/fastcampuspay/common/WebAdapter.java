@@ -1,4 +1,4 @@
-package common;
+package com.fastcampuspay.common;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

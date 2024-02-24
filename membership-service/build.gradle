@@ -1,61 +1,37 @@
-buildscript {
-    dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE"
-    }
-}
-
 plugins {
-    id 'org.springframework.boot'
-    id 'java'
+    id 'com.palantir.docker' version '0.25.0'
+}
+ext {
+    axonVersion = "4.6.0"
 }
 
-compileJava {
-    sourceCompatibility = 11
-    targetCompatibility = 11
-}
-
-apply plugin: 'java'
-apply plugin: 'java-library'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-group 'com.fastcampuspay.membership'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
+group = 'com.fastcampuspay.membership'
+version = '1.0.2'
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-    testImplementation 'com.tngtech.archunit:archunit:1.0.1'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+    implementation group: 'org.axonframework', name: 'axon-configuration', version: "$axonVersion"
+    implementation group: 'org.axonframework', name: 'axon-spring-boot-starter', version: "$axonVersion"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    runtimeOnly 'com.h2database:h2'
+    implementation project(path: ':common')
+    implementation 'org.jetbrains:annotations:23.0.0'
+//    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java'
 }
 
-test {
-    useJUnitPlatform()
-//        maxHeapSize = "1024m" //원하는 만큼 변경
-}
+docker {
+    println(tasks.bootJar.outputs.files)
 
-bootRun {
-    enabled = false
-}
-
-bootJar {
-    enabled = false
-}
-
-bootBuildImage {
-    enabled = false
+    // 이미지 이름
+    name rootProject.name + '-' + project.name + ":" + version
+    // 어떤 Dockerfile
+    dockerfile file('../Dockerfile')
+    // 어떤 파일들을 Dockerfile에 복사할 것인가
+    files tasks.bootJar.outputs.files
+    // Dockerfile에 전달할 인자
+    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
 }

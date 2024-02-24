@@ -1,5 +1,6 @@
 package com.fastcampuspay.membership.application.service;
 
+import com.fastcampuspay.common.UseCase;
 import com.fastcampuspay.membership.adapter.out.persistence.MembershipJpaEntity;
 import com.fastcampuspay.membership.adapter.out.persistence.MembershipMapper;
 import com.fastcampuspay.membership.application.port.in.RegisterMembershipCommand;
@@ -9,7 +10,7 @@ import com.fastcampuspay.membership.domain.Membership;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service
+@UseCase
 @RequiredArgsConstructor
 public class RegisterMembershipService implements RegisterMembershipUseCase {
 

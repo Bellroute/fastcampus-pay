@@ -1,6 +1,6 @@
 package com.fastcampuspay.membership.application.port.in;
 
-import common.SelfValidating;
+import com.fastcampuspay.common.SelfValidating;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
